@@ -1,4 +1,4 @@
-#disease.prediction2.py
+# disease-prediction.py
 # Importing libraries
 import numpy as np
 import pandas as pd
@@ -11,7 +11,6 @@ from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
-
 
 # Reading the train.csv by removing the 
 # last column since it's an empty column
@@ -36,15 +35,13 @@ plt.show()
 encoder = LabelEncoder()
 data["prognosis"] = encoder.fit_transform(data["prognosis"])
 
-
 X = data.iloc[:,:-1]
 y = data.iloc[:, -1]
 X_train, X_test, y_train, y_test =train_test_split(
-X, y, test_size = 0.2, random_state = 24)
+	X, y, test_size = 0.2, random_state = 24)
 
 print(f"Train: {X_train.shape}, {y_train.shape}")
 print(f"Test: {X_test.shape}, {y_test.shape}")
-
 # Defining scoring metric for k-fold cross validation
 def cv_scoring(estimator, X, y):
 	return accuracy_score(y, estimator.predict(X))
@@ -116,7 +113,6 @@ sns.heatmap(cf_matrix, annot=True)
 plt.title("Confusion Matrix for Random Forest Classifier on Test Data")
 plt.show()
 
-
 # Training the models on whole data
 final_svm_model = SVC()
 final_nb_model = GaussianNB()
@@ -137,8 +133,10 @@ svm_preds = final_svm_model.predict(test_X)
 nb_preds = final_nb_model.predict(test_X)
 rf_preds = final_rf_model.predict(test_X)
 
-final_preds = [mode([i,j,k])[0][0] for i,j,
-			k in zip(svm_preds, nb_preds, rf_preds)]
+# final_preds = [mode([i,j,k])[0][0] for i,j,
+# 			k in zip(svm_preds, nb_preds, rf_preds)]
+
+final_preds = [mode([i,j,k])[0] for i,j,k in zip(svm_preds, nb_preds, rf_preds)]
 
 print(f"Accuracy on Test dataset by the combined model\
 : {accuracy_score(test_Y, final_preds)*100}")
@@ -149,8 +147,6 @@ plt.figure(figsize=(12,8))
 sns.heatmap(cf_matrix, annot = True)
 plt.title("Confusion Matrix for Combined Model on Test Dataset")
 plt.show()
-
-
 
 symptoms = X.columns.values
 
@@ -188,7 +184,8 @@ def predictDisease(symptoms):
 	svm_prediction = data_dict["predictions_classes"][final_svm_model.predict(input_data)[0]]
 	
 	# making final prediction by taking mode of all predictions
-	final_prediction = mode([rf_prediction, nb_prediction, svm_prediction])[0][0]
+	# final_prediction = mode([rf_prediction, nb_prediction, svm_prediction])
+	final_prediction = np.unique([rf_prediction, nb_prediction, svm_prediction])[0]
 	predictions = {
 		"rf_model_prediction": rf_prediction,
 		"naive_bayes_prediction": nb_prediction,
@@ -199,5 +196,3 @@ def predictDisease(symptoms):
 
 # Testing the function
 print(predictDisease("Itching,Skin Rash,Nodal Skin Eruptions"))
-
-
