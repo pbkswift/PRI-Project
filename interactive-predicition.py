@@ -1,17 +1,5 @@
 # Interactive-predicition.py
 
-
-symptom1 = input ("enter symptom1 ;")
-symptom2 = input ("enter symptom2 ;")
-symptom3 = input ("enter symptom3 ;")
-
-
-combinedsymptoms= symptom1+","+symptom2+","+symptom3
-
-print(combinedsymptoms)
-
-
-# disease-prediction.py
 # Importing libraries
 import numpy as np
 import pandas as pd
@@ -37,10 +25,10 @@ temp_df = pd.DataFrame({
 	"Counts": disease_counts.values
 })
 
-plt.figure(figsize = (18,8))
-sns.barplot(x = "Disease", y = "Counts", data = temp_df)
-plt.xticks(rotation=90)
-plt.show()
+#plt.figure(figsize = (18,8))
+#sns.barplot(x = "Disease", y = "Counts", data = temp_df)
+# plt.xticks(rotation=90)
+# plt.show()
 
 
 # Encoding the target value into numerical
@@ -90,10 +78,10 @@ print(f"Accuracy on train data by SVM Classifier\
 print(f"Accuracy on test data by SVM Classifier\
 : {accuracy_score(y_test, preds)*100}")
 cf_matrix = confusion_matrix(y_test, preds)
-plt.figure(figsize=(12,8))
-sns.heatmap(cf_matrix, annot=True)
-plt.title("Confusion Matrix for SVM Classifier on Test Data")
-plt.show()
+# plt.figure(figsize=(12,8))
+# sns.heatmap(cf_matrix, annot=True)
+# plt.title("Confusion Matrix for SVM Classifier on Test Data")
+# plt.show()
 
 # Training and testing Naive Bayes Classifier
 nb_model = GaussianNB()
@@ -105,10 +93,10 @@ print(f"Accuracy on train data by Naive Bayes Classifier\
 print(f"Accuracy on test data by Naive Bayes Classifier\
 : {accuracy_score(y_test, preds)*100}")
 cf_matrix = confusion_matrix(y_test, preds)
-plt.figure(figsize=(12,8))
-sns.heatmap(cf_matrix, annot=True)
-plt.title("Confusion Matrix for Naive Bayes Classifier on Test Data")
-plt.show()
+# plt.figure(figsize=(12,8))
+# sns.heatmap(cf_matrix, annot=True)
+# plt.title("Confusion Matrix for Naive Bayes Classifier on Test Data")
+# plt.show()
 
 # Training and testing Random Forest Classifier
 rf_model = RandomForestClassifier(random_state=18)
@@ -121,10 +109,10 @@ print(f"Accuracy on test data by Random Forest Classifier\
 : {accuracy_score(y_test, preds)*100}")
 
 cf_matrix = confusion_matrix(y_test, preds)
-plt.figure(figsize=(12,8))
-sns.heatmap(cf_matrix, annot=True)
-plt.title("Confusion Matrix for Random Forest Classifier on Test Data")
-plt.show()
+# plt.figure(figsize=(12,8))
+# sns.heatmap(cf_matrix, annot=True)
+# plt.title("Confusion Matrix for Random Forest Classifier on Test Data")
+# plt.show()
 
 # Training the models on whole data
 final_svm_model = SVC()
@@ -155,11 +143,11 @@ print(f"Accuracy on Test dataset by the combined model\
 : {accuracy_score(test_Y, final_preds)*100}")
 
 cf_matrix = confusion_matrix(test_Y, final_preds)
-plt.figure(figsize=(12,8))
+# plt.figure(figsize=(12,8))
 
-sns.heatmap(cf_matrix, annot = True)
-plt.title("Confusion Matrix for Combined Model on Test Dataset")
-plt.show()
+# sns.heatmap(cf_matrix, annot = True)
+# plt.title("Confusion Matrix for Combined Model on Test Dataset")
+# plt.show()
 
 symptoms = X.columns.values
 
@@ -209,6 +197,16 @@ def predictDisease(symptoms):
 
 # Testing the function
 #print(predictDisease("Itching,Skin Rash,Nodal Skin Eruptions"))
+
+
+symptom1 = input ("enter symptom1 ;")
+symptom2 = input ("enter symptom2 ;")
+symptom3 = input ("enter symptom3 ;")
+
+
+combinedsymptoms= symptom1+","+symptom2+","+symptom3
+
+print(combinedsymptoms)
 
 
 print(predictDisease(combinedsymptoms))
