@@ -13,6 +13,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 
+
 ## Function Definitions
 
 # Defining scoring metric for k-fold cross validation
@@ -63,6 +64,9 @@ def predictDisease(symptoms):
 	}
 	return predictions
 
+# Starts here
+# Pandas has a function called read_csv
+# Dropna is to remove missing values
 # Reading the train.csv by removing the last column since it's an empty column
 data = pd.read_csv("./dataset/Training.csv").dropna(axis = 1)
 
