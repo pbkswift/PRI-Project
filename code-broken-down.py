@@ -19,7 +19,12 @@ print ("Prognosis Column Only -----------")
 
 print(data["prognosis"])
 
+
+
 print ("Magik of Encoding -----")
+
+
+
 
 encoder = LabelEncoder()
 encodedarray = encoder.fit_transform(data["prognosis"])
