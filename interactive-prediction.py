@@ -1,4 +1,4 @@
-# Interactive-predicition.py
+# interactive-prediction.py
 
 # Importing libraries
 import numpy as np
@@ -12,7 +12,6 @@ from sklearn.svm import SVC
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
-
 
 ## Function Definitions
 
