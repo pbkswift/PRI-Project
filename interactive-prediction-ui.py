@@ -71,6 +71,9 @@ def diagnose_button_clicked():
         label_svm_prediction.config(text=predictions["svm_model_prediction"])
     else:
         print("Select at least 3 symptoms")
+        label_rf_prediction.config(text="Select at least 3 symptoms")
+        label_nb_prediction.config(text="Select at least 3 symptoms")
+        label_svm_prediction.config(text="Select at least 3 symptoms")
 
 # Starts here
 # Pandas has a function called read_csv
@@ -142,7 +145,11 @@ scroll_bar.place(x=400, y=0, width=10, height=400)
 #  communicate back to the scrollbar
 listbox['yscrollcommand'] = scroll_bar.set
 
-for symptom in data_dict["symptom_index"].keys():
+thekeys = data_dict["symptom_index"].keys()
+thekeys = list(thekeys)
+thekeys = sorted(thekeys)
+
+for symptom in thekeys:
     listbox.insert(
         tk.END,
         symptom
