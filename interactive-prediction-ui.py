@@ -10,6 +10,8 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 import tkinter as tk
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
 
 ## Function Definitions
 
@@ -139,7 +141,7 @@ data_dict = {
     "predictions_classes":encoder.classes_
 }
 
-root = tk.Tk()
+root = ttk.Window(themename="cyborg") # tk.Tk()
 root.title = "Diagnose ..."
 root.geometry('800x400+50+50')
 
@@ -149,7 +151,7 @@ listbox = tk.Listbox(
 )
 listbox.place(height=400, width=400)
 
-scroll_bar = tk.Scrollbar(root, orient='vertical',
+scroll_bar = ttk.Scrollbar(root, orient='vertical',
     command=listbox.yview)
 scroll_bar.place(x=400, y=0, width=10, height=400)
 
@@ -166,51 +168,51 @@ for symptom in thekeys:
         symptom
     )
 
-button = tk.Button(
-    root,
-    text="Diagnose",
-    command=diagnose_button_clicked
-)
-button.place(x=420, y=20, width=250, height=20)
-
-label1 = tk.Label(
+label1 = ttk.Label(
     root,
     text = "RF Model Prediction:",
-    anchor=tk.W
+    anchor=ttk.W
 )
 label1.place(x=420, y=45, width=250, height=20)
 
-label2 = tk.Label(
+label2 = ttk.Label(
     root,
     text = "Naive Bayes Prediction:",
-    anchor=tk.W
+    anchor=ttk.W
 )
 label2.place(x=420, y=95, width=250, height=20)
 
-label3 = tk.Label(
+label3 = ttk.Label(
     root,
     text = "Support Vector Machine Prediction:",
-    anchor=tk.W
+    anchor=ttk.W
 )
 label3.place(x=420, y=145, width=250, height=20)
 
-label_rf_prediction= tk.Label(
+label_rf_prediction= ttk.Label(
     root,
     text = "RF",
-    anchor=tk.W
+    anchor=ttk.W
 )
 label_rf_prediction.place(x=440, y=70, width=250, height=20)
-label_nb_prediction= tk.Label(
+label_nb_prediction= ttk.Label(
     root,
     text = "NB",
-    anchor=tk.W
+    anchor=ttk.W
 )
 label_nb_prediction.place(x=440, y=120, width=250, height=20)
-label_svm_prediction= tk.Label(
+label_svm_prediction= ttk.Label(
     root,
     text = "SVM",
-    anchor=tk.W
+    anchor=ttk.W
 )
 label_svm_prediction.place(x=440, y=170, width=250, height=20)
+
+button = ttk.Button(
+    root,
+    text="Diagnose",
+    command=diagnose_button_clicked, bootstyle=SUCCESS
+)
+button.place(x=420, y=200, width=250, height=40)
 
 root.mainloop()
