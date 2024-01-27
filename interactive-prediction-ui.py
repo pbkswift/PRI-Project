@@ -46,6 +46,11 @@ def predictDisease(symptoms):
     input_data = np.array(input_data).reshape(1,-1)
     
     # generating individual outputs
+    rf_prediction_prob = final_rf_model.predict_proba(input_data)
+    print(rf_prediction_prob.max())
+    nb_prediction_prob = final_nb_model.predict_proba(input_data)
+    svm_prediction_prob = final_svm_model.predict_proba(input_data)
+
     rf_prediction = data_dict["predictions_classes"][final_rf_model.predict(input_data)[0]]
     nb_prediction = data_dict["predictions_classes"][final_nb_model.predict(input_data)[0]]
     svm_prediction = data_dict["predictions_classes"][final_svm_model.predict(input_data)[0]]
@@ -55,8 +60,11 @@ def predictDisease(symptoms):
     final_prediction = np.unique([rf_prediction, nb_prediction, svm_prediction])[0]
     predictions = {
         "rf_model_prediction": rf_prediction,
+        "rf_model_prediction_prob": rf_prediction_prob.max() * 100, 
         "naive_bayes_prediction": nb_prediction,
+        "naive_bayes_prediction_prob": nb_prediction_prob.max() * 100,
         "svm_model_prediction": svm_prediction,
+        "svm_model_prediction_prob": svm_prediction_prob.max() * 100,
         "final_prediction":final_prediction
     }
     return predictions
@@ -66,9 +74,12 @@ def diagnose_button_clicked():
     if len(selected_indexes)>2:
         selected_symptoms = [listbox.get(index) for index in selected_indexes]
         predictions = predictDisease(selected_symptoms)
-        label_rf_prediction.config(text=predictions["rf_model_prediction"])
-        label_nb_prediction.config(text=predictions["naive_bayes_prediction"])
-        label_svm_prediction.config(text=predictions["svm_model_prediction"])
+        label_rf_prediction.config(
+            text= "{0} @ {1:1.2f}%".format(predictions["rf_model_prediction"], predictions["rf_model_prediction_prob"]))
+        label_nb_prediction.config(
+            text= "{0} @ {1:1.2f}%".format(predictions["naive_bayes_prediction"], predictions["naive_bayes_prediction_prob"]))
+        label_svm_prediction.config(
+            text="{0} @ {1:1.2f}%".format(predictions["svm_model_prediction"], predictions["svm_model_prediction_prob"]))
     else:
         print("Select at least 3 symptoms")
         label_rf_prediction.config(text="Select at least 3 symptoms")
@@ -95,7 +106,7 @@ test_X = test_data.iloc[:, :-1]
 test_Y = encoder.transform(test_data.iloc[:, -1])
 
 # Training the models on whole data
-final_svm_model = SVC()
+final_svm_model = SVC(C=1, probability=True)
 final_nb_model = GaussianNB()
 final_rf_model = RandomForestClassifier(random_state=18)
 
